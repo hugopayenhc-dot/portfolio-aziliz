@@ -1,0 +1,23 @@
+---
+// Fenêtre de recherche (ouverte par la loupe). Les résultats s'affichent
+// pendant la frappe, sous forme de petites cartes avec vignette.
+import T from './T.astro';
+import { UI } from '../data/structure.js';
+---
+<dialog class="search" data-search aria-label="Recherche">
+  <div class="search__inner">
+    <div class="search__bar">
+      <label class="visually-hidden" for="search-input"><T t={UI.search} /></label>
+      <input id="search-input" type="search" autocomplete="off" placeholder={UI.searchPlaceholder.fr} data-search-input />
+      <button class="search__close" type="button" data-search-close>
+        <span aria-hidden="true">×</span><span class="visually-hidden"><T t={UI.close} /></span>
+      </button>
+    </div>
+    <p class="search__status" aria-live="polite" data-search-status></p>
+    <ul class="search__results" data-search-results></ul>
+  </div>
+</dialog>
+
+<script>
+  import '../scripts/search.js';
+</script>

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /admin/
+
+Sitemap: https://aziliz-dupont-huin.netlify.app/sitemap-index.xml

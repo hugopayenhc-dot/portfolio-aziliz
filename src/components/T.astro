@@ -1,0 +1,26 @@
+---
+// Affiche un texte en français, en anglais ou en italien selon la langue
+// choisie (boutons FR / EN / IT en bas de page et dans le menu).
+// Si une traduction est vide, le texte français s'affiche à la place.
+//
+// Utilisation :  <T fr="Bonjour" en="Hello" it="Ciao" />
+//                <T t={UI.menu} />                     (objet { fr, en, it })
+//                <T fr={htmlFr} en={htmlEn} it={htmlIt} html />  (contenu HTML)
+const { t, html = false } = Astro.props;
+const src = t || Astro.props;
+const fr = src.fr || '';
+const versions = [
+  ['fr', fr],
+  ['en', src.en || fr],
+  ['it', src.it || fr],
+];
+// Les trois versions sont identiques : pas besoin de les dupliquer.
+const same = versions.every(([, v]) => v === fr);
+---
+{same ? (
+  html ? <Fragment set:html={fr} /> : <Fragment>{fr}</Fragment>
+) : html ? (
+  versions.map(([lang, v]) => <div class="i18n" lang={lang} set:html={v} />)
+) : (
+  versions.map(([lang, v]) => <span class="i18n" lang={lang}>{v}</span>)
+)}

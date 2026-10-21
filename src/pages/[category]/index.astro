@@ -1,0 +1,61 @@
+---
+// Page d'une rubrique (Dessin, Sculpture…) : titre, introduction,
+// puis un bloc par sous-rubrique avec la grille des travaux.
+import Base from '../../layouts/Base.astro';
+import T from '../../components/T.astro';
+import SubNav from '../../components/SubNav.astro';
+import PostCard from '../../components/PostCard.astro';
+import { getCategories, getPublishedPosts, postSub, subLabel, md, plainText } from '../../lib/content.js';
+import { UI } from '../../data/structure.js';
+
+// Une page par rubrique de travaux (« À propos » a sa propre page).
+export async function getStaticPaths() {
+  const categories = await getCategories();
+  return categories
+    .filter((c) => c.id !== 'a-propos')
+    .map((category) => ({ params: { category: category.id }, props: { category } }));
+}
+
+const { category } = Astro.props;
+const posts = (await getPublishedPosts()).filter((p) => p.data.category === category.id);
+
+// Regroupe les travaux par sous-rubrique. Ceux sans sous-rubrique valide
+// vont dans « Divers » (ou directement dans la grille si la rubrique n'a pas de sous-rubriques).
+const groups = category.subs.map((s) => ({ id: s, label: subLabel(s), posts: posts.filter((p) => postSub(p) === s) }));
+const loose = posts.filter((p) => !postSub(p));
+if (loose.length || !groups.length) {
+  groups.push({ id: 'divers', label: category.subs.length ? UI.other : null, posts: loose });
+}
+
+const firstPhoto = posts.find((p) => p.data.photos[0])?.data.photos[0].image;
+---
+<Base title={category.name} description={plainText(category.intro, 160) || category.subtitle} image={category.cover || firstPhoto}>
+  <header class="page-head">
+    <h1 class="page-title"><T fr={category.name} en={category.name_en} it={category.name_it} /></h1>
+    {category.subtitle && <p class="page-subtitle"><T fr={category.subtitle} en={category.subtitle_en} it={category.subtitle_it} /></p>}
+  </header>
+
+  <SubNav category={category} spy={true} />
+
+  {category.intro && (
+    <div class="intro prose">
+      <T fr={md(category.intro)} en={md(category.intro_en)} it={md(category.intro_it)} html />
+    </div>
+  )}
+
+  {groups.map((g) => (
+    <Fragment>
+      <hr class="band" />
+      <section class="section" id={g.id} aria-labelledby={g.label ? `h-${g.id}` : undefined}>
+        {g.label && <h2 class="section__title" id={`h-${g.id}`}><T t={g.label} /></h2>}
+        {g.posts.length ? (
+          <div class="grid">
+            {g.posts.map((p) => <PostCard post={p} />)}
+          </div>
+        ) : (
+          <p class="empty"><T t={UI.nothingYet} /></p>
+        )}
+      </section>
+    </Fragment>
+  ))}
+</Base>

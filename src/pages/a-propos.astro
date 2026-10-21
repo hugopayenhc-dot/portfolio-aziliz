@@ -1,0 +1,72 @@
+---
+// Page « À propos de moi » (même fond que l'accueil) : portrait, bio, démarche, CV, contact.
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import T from '../components/T.astro';
+import { getSettings, getCategories, md, plainText } from '../lib/content.js';
+import { UI } from '../data/structure.js';
+
+const settings = await getSettings();
+const page = (await getCategories()).find((c) => c.id === 'a-propos');
+const cv = (await getCollection('cv')).map((e) => e.data).sort((a, b) => a.order - b.order);
+const schools = cv.filter((e) => e.type === 'ecole');
+const apprenticeships = cv.filter((e) => e.type === 'apprentissage');
+const cvGroups = [
+  { label: UI.school, items: schools },
+  { label: UI.apprenticeships, items: apprenticeships },
+];
+---
+<Base title={page?.name || 'À propos de moi'} description={plainText(settings.bio, 160)} image={settings.portrait} bodyClass="page--motif">
+  <header class="page-head">
+    <h1 class="page-title"><T fr={page?.name || 'À propos de moi'} en={page?.name_en} it={page?.name_it} /></h1>
+    {page?.subtitle && <p class="page-subtitle"><T fr={page.subtitle} en={page.subtitle_en} it={page.subtitle_it} /></p>}
+  </header>
+
+  <div class="about">
+    <figure class="about__portrait">
+      {settings.portrait ? (
+        <Image src={settings.portrait} alt={settings.portrait_alt || 'Portrait d’Aziliz Dupont Huin'} widths={[400, 700, 1000]} sizes="(min-width: 900px) 35vw, 100vw" loading="eager" />
+      ) : (
+        <div class="kraft kraft--dark" role="img" aria-label="Portrait à venir"><span class="kraft__label"><T t={UI.noPhoto} /></span></div>
+      )}
+    </figure>
+
+    <div class="about__text">
+      {settings.bio && <div class="about__bio prose"><T fr={md(settings.bio)} en={md(settings.bio_en)} it={md(settings.bio_it)} html /></div>}
+
+      {settings.approach && (
+        <section aria-labelledby="h-demarche">
+          <h2 class="about__h2" id="h-demarche"><T t={UI.approach} /></h2>
+          <div class="prose"><T fr={md(settings.approach)} en={md(settings.approach_en)} it={md(settings.approach_it)} html /></div>
+        </section>
+      )}
+
+      <section aria-labelledby="h-cv">
+        <h2 class="about__h2" id="h-cv">CV</h2>
+        {cvGroups.map((g) => g.items.length > 0 && (
+          <div class="cv">
+            <h3 class="cv__h3"><T t={g.label} /></h3>
+            <ul class="cv__list">
+              {g.items.map((e) => (
+                <li class="cv__item">
+                  <span class="cv__dates">{e.dates}</span>
+                  <span class="cv__place">{e.place}</span>
+                  {e.description && <span class="cv__desc"><T fr={e.description} en={e.description_en} it={e.description_it} /></span>}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <section aria-labelledby="h-contact">
+        <h2 class="about__h2" id="h-contact"><T t={UI.contact} /></h2>
+        <ul class="about__contact">
+          {settings.email && <li><a href={`mailto:${settings.email}`}>{settings.email}</a></li>}
+          {settings.instagram && <li><a href={settings.instagram} rel="me noopener" target="_blank">Instagram ↗</a></li>}
+        </ul>
+      </section>
+    </div>
+  </div>
+</Base>

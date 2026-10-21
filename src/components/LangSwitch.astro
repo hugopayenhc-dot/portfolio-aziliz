@@ -1,0 +1,19 @@
+---
+// Boutons de langue FR / EN / IT (en bas de chaque page et dans le menu).
+// Le changement de langue se fait dans src/scripts/lang.js.
+import { LANGS } from '../data/structure.js';
+---
+<div class="lang-switch" role="group" aria-label="Langue / Language / Lingua">
+  {LANGS.map((l, i) => (
+    <Fragment>
+      {i > 0 && <span aria-hidden="true">/</span>}
+      <button type="button" data-lang-btn={l.code} aria-pressed={l.code === 'fr' ? 'true' : 'false'} title={l.name}>
+        <span aria-hidden="true">{l.label}</span><span class="visually-hidden">{l.name}</span>
+      </button>
+    </Fragment>
+  ))}
+</div>
+
+<script>
+  import '../scripts/lang.js';
+</script>

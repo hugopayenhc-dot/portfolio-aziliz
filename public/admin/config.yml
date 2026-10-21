@@ -1,0 +1,234 @@
+# Réglages de l'administration (Decap CMS) — https://decapcms.org/docs/
+#
+# Dépôt GitHub du site : hugopayenhc-dot/portfolio-aziliz
+#    (à changer seulement si le dépôt est renommé ou déplacé).
+
+backend:
+  name: github
+  repo: hugopayenhc-dot/portfolio-aziliz
+  branch: main
+  commit_messages:
+    create: "Ajout : {{collection}} « {{slug}} »"
+    update: "Modification : {{collection}} « {{slug}} »"
+    delete: "Suppression : {{collection}} « {{slug}} »"
+    uploadMedia: "Ajout de l'image {{path}}"
+    deleteMedia: "Suppression de l'image {{path}}"
+
+# Permet de tester l'admin sur son ordinateur (npm run admin + npm run dev).
+local_backend: true
+
+locale: fr
+site_url: https://aziliz-dupont-huin.netlify.app
+logo_url: /favicon.svg
+
+# Les photos envoyées sont rangées ici (Astro les optimise automatiquement).
+media_folder: src/assets/uploads
+public_folder: ../../assets/uploads
+
+collections:
+  # ------------------------------------------------------------------
+  - name: posts
+    label: Travaux
+    label_singular: Travail
+    description: "Vos œuvres, inspirations et étapes de construction. Un travail = une fiche."
+    folder: src/content/posts
+    create: true
+    slug: "{{slug}}"
+    extension: md
+    format: frontmatter
+    summary: "{{title}} — {{category}} / {{subcategory}}"
+    sortable_fields: [title, date, category, order]
+    view_filters:
+      - { label: Dessin, field: category, pattern: dessin }
+      - { label: Sculpture, field: category, pattern: sculpture }
+      - { label: Minotaure, field: category, pattern: minotaure }
+      - { label: Marionnette, field: category, pattern: marionnette }
+      - { label: Autres projets, field: category, pattern: autres-projets }
+      - { label: Brouillons (non publiés), field: published, pattern: false }
+    fields:
+      - label: Titre
+        name: title
+        widget: string
+        hint: "Le titre de l'œuvre. Il s'affiche en italique."
+      - label: Titre en anglais
+        name: title_en
+        widget: string
+        required: false
+        hint: "Facultatif. Laissez vide si le titre ne se traduit pas."
+      - label: Titre en italien
+        name: title_it
+        widget: string
+        required: false
+        hint: "Facultatif. Laissez vide si le titre ne se traduit pas."
+      - label: Date
+        name: date
+        widget: datetime
+        date_format: "DD/MM/YYYY"
+        time_format: false
+        format: "YYYY-MM-DD"
+        picker_utc: true
+        hint: "Seule l'année est affichée sur le site."
+      - label: Rubrique
+        name: category
+        widget: select
+        options:
+          - { label: Dessin, value: dessin }
+          - { label: Sculpture, value: sculpture }
+          - { label: Minotaure, value: minotaure }
+          - { label: Marionnette, value: marionnette }
+          - { label: Autres projets, value: autres-projets }
+      - label: Sous-rubrique
+        name: subcategory
+        widget: select
+        required: false
+        options:
+          - { label: Inspiration, value: inspiration }
+          - { label: Œuvres, value: oeuvres }
+          - { label: Construction, value: construction }
+          - { label: Projet fini, value: projet-fini }
+        hint: "Dessin et Sculpture : Inspiration ou Œuvres. Minotaure et Marionnette : Inspiration, Construction ou Projet fini. Autres projets : laissez vide."
+      - label: Photos
+        name: photos
+        widget: list
+        required: false
+        collapsed: false
+        summary: "{{fields.alt}}"
+        hint: "La première photo est la photo principale. Glissez pour changer l'ordre."
+        fields:
+          - { label: Image, name: image, widget: image, hint: "Format JPG ou PNG. Idéalement moins de 5 Mo." }
+          - { label: Description de la photo, name: alt, widget: string, hint: "Décrivez ce qu'on voit en quelques mots (pour les personnes malvoyantes et Google). Ex. : « Sculpture de taureau en carton, vue de profil »." }
+      - label: Lien vidéo
+        name: video
+        widget: string
+        required: false
+        hint: "Facultatif. Collez un lien YouTube ou Vimeo : la vidéo s'affichera dans la page."
+      - label: Matériaux
+        name: materials
+        widget: string
+        required: false
+        hint: "Ex. : Carton, colle, bois"
+      - label: Dimensions
+        name: dimensions
+        widget: string
+        required: false
+        hint: "Ex. : 55 x 30 cm"
+      - label: Source / crédit
+        name: credit
+        widget: string
+        required: false
+        hint: "Pour les inspirations : l'artiste, la compagnie, l'année…"
+      - label: Texte
+        name: body
+        widget: markdown
+        required: false
+        buttons: [bold, italic, link, heading-two, bulleted-list, quote]
+        editor_components: []
+        hint: "Astuce : un mot en gras devient un « mot-clé » affiché en grandes lettres espacées."
+      - label: Texte en anglais
+        name: text_en
+        widget: markdown
+        required: false
+        buttons: [bold, italic, link, bulleted-list]
+        editor_components: []
+        hint: "Facultatif. Si vide, le texte français s'affiche aussi en anglais."
+      - label: Texte en italien
+        name: text_it
+        widget: markdown
+        required: false
+        buttons: [bold, italic, link, bulleted-list]
+        editor_components: []
+        hint: "Facultatif. Si vide, le texte français s'affiche aussi en italien."
+      - label: Ordre d'affichage
+        name: order
+        widget: number
+        value_type: int
+        default: 0
+        required: false
+        hint: "1 s'affiche en premier, puis 2, 3… À égalité, le plus récent passe devant."
+      - label: Publié
+        name: published
+        widget: boolean
+        default: true
+        hint: "Décochez pour cacher ce travail du site sans le supprimer."
+
+  # ------------------------------------------------------------------
+  - name: categories
+    label: Rubriques
+    label_singular: Rubrique
+    description: "Les 6 rubriques du site : nom, sous-titre, texte d'introduction et image de couverture."
+    folder: src/content/categories
+    extension: json
+    format: json
+    create: false
+    delete: false
+    identifier_field: name
+    sortable_fields: [order]
+    fields:
+      - { label: Nom, name: name, widget: string }
+      - { label: Nom en anglais, name: name_en, widget: string, required: false }
+      - { label: Nom en italien, name: name_it, widget: string, required: false }
+      - { label: Sous-titre, name: subtitle, widget: string, required: false, hint: "Une courte phrase sous le titre." }
+      - { label: Sous-titre en anglais, name: subtitle_en, widget: string, required: false }
+      - { label: Sous-titre en italien, name: subtitle_it, widget: string, required: false }
+      - label: Texte d'introduction
+        name: intro
+        widget: markdown
+        required: false
+        buttons: [bold, italic, link]
+        editor_components: []
+        hint: "Mettez quelques mots en gras : ils s'afficheront en grandes lettres espacées."
+      - { label: Introduction en anglais, name: intro_en, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [] }
+      - { label: Introduction en italien, name: intro_it, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [] }
+      - { label: Image de couverture, name: cover, widget: image, required: false, hint: "Utilisée sur l'accueil et dans le menu." }
+      - { label: Description de l'image, name: cover_alt, widget: string, required: false, hint: "Ce qu'on voit sur l'image, en quelques mots." }
+      - { label: Ordre, name: order, widget: number, value_type: int, hint: "Position de la rubrique (1 à 6) sur l'accueil et dans le menu." }
+
+  # ------------------------------------------------------------------
+  - name: cv
+    label: CV
+    label_singular: Ligne de CV
+    description: "Votre parcours : écoles et apprentissages (stages, ateliers)."
+    folder: src/content/cv
+    extension: json
+    format: json
+    create: true
+    identifier_field: place
+    slug: "{{slug}}"
+    summary: "{{dates}} — {{place}}"
+    sortable_fields: [order]
+    fields:
+      - label: Type
+        name: type
+        widget: select
+        options:
+          - { label: École, value: ecole }
+          - { label: Apprentissage, value: apprentissage }
+      - { label: Dates, name: dates, widget: string, hint: "Ex. : Juillet – août 2025" }
+      - { label: Lieu, name: place, widget: string, hint: "Ex. : Hentiot, Quimper" }
+      - { label: Description, name: description, widget: string, required: false, hint: "Ex. : Céramique et peinture à la main" }
+      - { label: Description en anglais, name: description_en, widget: string, required: false }
+      - { label: Description en italien, name: description_it, widget: string, required: false }
+      - { label: Ordre, name: order, widget: number, value_type: int, default: 0, hint: "1 s'affiche en premier." }
+
+  # ------------------------------------------------------------------
+  - name: settings
+    label: Réglages
+    description: "Informations générales : contact, Instagram, portrait, bio."
+    files:
+      - name: site
+        label: Réglages du site
+        file: src/content/settings/site.json
+        fields:
+          - { label: Titre du site, name: title, widget: string, hint: "Affiché dans l'onglet du navigateur et sur Google." }
+          - { label: Description du site, name: description, widget: text, hint: "Une ou deux phrases pour Google et les réseaux sociaux." }
+          - { label: E-mail de contact, name: email, widget: string, required: false }
+          - { label: Lien Instagram, name: instagram, widget: string, required: false, hint: "L'adresse complète, ex. : https://www.instagram.com/votre_compte/" }
+          - { label: Image d'accueil, name: hero_image, widget: image, required: false, hint: "Facultatif. Une grande photo, assombrie, derrière « Portfolio »." }
+          - { label: Portrait, name: portrait, widget: image, required: false }
+          - { label: Description du portrait, name: portrait_alt, widget: string, required: false, hint: "Ex. : « Aziliz dans son atelier »" }
+          - { label: Bio courte, name: bio, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [] }
+          - { label: Bio en anglais, name: bio_en, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [] }
+          - { label: Bio en italien, name: bio_it, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [] }
+          - { label: Démarche, name: approach, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [], hint: "Votre démarche artistique (page À propos)." }
+          - { label: Démarche en anglais, name: approach_en, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [] }
+          - { label: Démarche en italien, name: approach_it, widget: markdown, required: false, buttons: [bold, italic, link], editor_components: [] }

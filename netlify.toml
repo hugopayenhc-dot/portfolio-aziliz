@@ -1,0 +1,14 @@
+# Configuration de Netlify (l'hébergeur).
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# La page d'administration ne doit pas être mise en cache trop longtemps.
+[[headers]]
+  for = "/admin/*"
+  [headers.values]
+    Cache-Control = "no-cache"
+    X-Robots-Tag = "noindex"

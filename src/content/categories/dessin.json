@@ -1,0 +1,14 @@
+{
+  "name": "Dessin",
+  "name_en": "Drawing",
+  "name_it": "Disegno",
+  "subtitle": "Avant le volume, il y a le dessin, la page blanche.",
+  "subtitle_en": "Before volume, there is drawing, the blank page.",
+  "subtitle_it": "Prima del volume, c'è il disegno, la pagina bianca.",
+  "intro": "Le stylo à bille est mon outil de prédilection, mon compagnon de chaque instant. Le carnet de croquis me suit partout : il rassemble observations et réflexions.\n\nDe ces accumulations de lignes et de pensées, des formes commencent à apparaître — le début d'une **structure**.",
+  "intro_en": "The ballpoint pen is my preferred tool, my constant companion. The sketchbook also follows me everywhere: it gathers observations and reflections.\n\nFrom these accumulations of lines and thoughts, forms begin to appear — the beginning of a **structure**.",
+  "intro_it": "La penna a sfera è il mio strumento preferito, la mia compagna costante. Anche il quaderno di schizzi mi segue ovunque: raccoglie osservazioni e riflessioni.\n\nDa questi accumuli di linee e di pensieri cominciano ad apparire delle forme — l'inizio di una **struttura**.",
+  "cover": "../../assets/uploads/l-orgueil.jpg",
+  "cover_alt": "L'orgueil : minotaure accroupi dessiné au fusain sur papier kraft",
+  "order": 1
+}

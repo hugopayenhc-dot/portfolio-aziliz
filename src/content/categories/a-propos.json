@@ -1,0 +1,14 @@
+{
+  "name": "À propos de moi",
+  "name_en": "About me",
+  "name_it": "Chi sono",
+  "subtitle": "Sculptrice et illustratrice — EESAB Quimper",
+  "subtitle_en": "Sculptor and illustrator — EESAB Quimper",
+  "subtitle_it": "Scultrice e illustratrice — EESAB Quimper",
+  "intro": "",
+  "intro_en": "",
+  "intro_it": "",
+  "cover": "../../assets/uploads/aziliz-atelier-dessin.jpg",
+  "cover_alt": "Aziliz dessinant au fusain sur une grande feuille de kraft dans l'atelier",
+  "order": 6
+}

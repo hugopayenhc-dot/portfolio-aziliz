@@ -1,0 +1,80 @@
+---
+// Gabarit commun à toutes les pages : <head> (SEO), barre du haut,
+// menu plein écran, recherche et pied de page.
+import { getImage } from 'astro:assets';
+import '@fontsource/antonio/100.css';
+import '@fontsource/antonio/200.css';
+import '@fontsource/antonio/300.css';
+import '@fontsource/courier-prime/400.css';
+import '@fontsource/courier-prime/400-italic.css';
+import '@fontsource/courier-prime/700.css';
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import MenuOverlay from '../components/MenuOverlay.astro';
+import SearchDialog from '../components/SearchDialog.astro';
+import Footer from '../components/Footer.astro';
+import { getSettings, getCategories } from '../lib/content.js';
+
+const {
+  title, // titre de la page (sans le nom du site)
+  description, // description pour Google et les réseaux sociaux
+  image, // image de partage (photo importée), facultative
+  hero = false, // true = la barre du haut est transparente au départ
+  bodyClass = '',
+} = Astro.props;
+
+const settings = await getSettings();
+const categories = await getCategories();
+
+const fullTitle = title ? `${title} — ${settings.title}` : settings.title;
+const desc = description || settings.description;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+
+// Image de partage (Open Graph) : photo de la page, sinon image par défaut.
+let ogImage = new URL('/og-default.png', Astro.site).href;
+if (image) {
+  const og = await getImage({ src: image, width: 1200, format: 'jpg' });
+  ogImage = new URL(og.src, Astro.site).href;
+}
+---
+<!doctype html>
+<html lang="fr" data-lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <meta name="theme-color" content="#050508" />
+
+    <!-- Partage sur les réseaux sociaux -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={settings.title} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="fr_FR" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Applique la langue choisie (FR/EN/IT) avant l'affichage, sans clignotement -->
+    <script is:inline>
+      try {
+        var l = localStorage.getItem('lang');
+        if (l === 'en' || l === 'it') { document.documentElement.dataset.lang = l; document.documentElement.lang = l; }
+      } catch (e) {}
+    </script>
+  </head>
+  <body class={bodyClass}>
+    <a class="skip-link" href="#contenu">Aller au contenu</a>
+    <Header hero={hero} />
+    <MenuOverlay categories={categories} settings={settings} />
+    <SearchDialog />
+    <main id="contenu" tabindex="-1">
+      <slot />
+    </main>
+    <Footer settings={settings} />
+  </body>
+</html>

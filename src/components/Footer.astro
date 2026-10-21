@@ -1,0 +1,21 @@
+---
+// Pied de page discret, avec le choix de la langue (FR / EN / IT).
+import LangSwitch from './LangSwitch.astro';
+const { settings } = Astro.props;
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <hr class="band" />
+  <div class="footer__inner">
+    <p class="footer__name">Aziliz Dupont Huin</p>
+    <ul class="footer__links">
+      {settings.instagram && <li><a href={settings.instagram} rel="me noopener" target="_blank">Instagram</a></li>}
+      {settings.email && <li><a href={`mailto:${settings.email}`}>{settings.email}</a></li>}
+    </ul>
+    <!-- À droite : mention, puis le choix de la langue juste en dessous -->
+    <div class="footer__end">
+      <p class="footer__copy">© {year} — EESAB Quimper</p>
+      <LangSwitch />
+    </div>
+  </div>
+</footer>

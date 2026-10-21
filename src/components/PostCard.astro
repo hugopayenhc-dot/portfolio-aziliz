@@ -1,0 +1,27 @@
+---
+// Carte d'un travail dans une grille : photo (ou cadre kraft) + titre + année.
+import { Image } from 'astro:assets';
+import T from './T.astro';
+import { postUrl } from '../lib/content.js';
+const { post } = Astro.props;
+const { title, title_en, title_it, date, materials, photos } = post.data;
+const photo = photos[0];
+---
+<article class="card">
+  <a href={postUrl(post)} class="card__link">
+    {photo ? (
+      <Image
+        class="card__img"
+        src={photo.image}
+        alt={photo.alt || title}
+        widths={[360, 600, 900]}
+        sizes="(min-width: 1100px) 33vw, (min-width: 640px) 50vw, 100vw"
+        loading="lazy"
+      />
+    ) : (
+      <div class="kraft card__img" aria-hidden="true"><span class="kraft__label">{title}</span></div>
+    )}
+    <h3 class="card__title"><T fr={title} en={title_en} it={title_it} /></h3>
+    <p class="card__meta">{date.getFullYear()}{materials && ` · ${materials}`}</p>
+  </a>
+</article>

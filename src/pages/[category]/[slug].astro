@@ -1,0 +1,148 @@
+---
+// Page d'un travail : grande photo + galerie (cliquable), titre en italique,
+// année, matériaux, dimensions, texte, source, fil d'Ariane, précédent / suivant.
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import T from '../../components/T.astro';
+import SubNav from '../../components/SubNav.astro';
+import { getCategories, getPublishedPosts, postUrl, postSub, subLabel, videoEmbed, md, plainText } from '../../lib/content.js';
+import { UI, categoryUrl } from '../../data/structure.js';
+
+export async function getStaticPaths() {
+  const categories = await getCategories();
+  const posts = await getPublishedPosts();
+  return posts.map((post) => {
+    // Précédent / suivant : dans la même rubrique, dans l'ordre d'affichage.
+    const siblings = posts.filter((p) => p.data.category === post.data.category);
+    const i = siblings.indexOf(post);
+    return {
+      params: { category: post.data.category, slug: post.id },
+      props: {
+        post,
+        category: categories.find((c) => c.id === post.data.category),
+        prev: siblings[i - 1] || null,
+        next: siblings[i + 1] || null,
+      },
+    };
+  });
+}
+
+const { post, category, prev, next } = Astro.props;
+const d = post.data;
+const sub = postSub(post);
+const { Content } = await render(post);
+const embed = videoEmbed(d.video);
+
+// Version grand format de chaque photo, pour la visionneuse (lightbox).
+// (2000 px au maximum, et jamais plus grande que la photo d'origine.)
+const photos = await Promise.all(
+  d.photos.map(async (p) => ({
+    ...p,
+    full: (await getImage({ src: p.image, width: Math.min(2000, p.image.width) })).src,
+  }))
+);
+---
+<Base title={d.title} description={plainText(post.body, 160) || `${d.title}, ${d.materials}`} image={d.photos[0]?.image}>
+  <!-- Espace sous la barre du haut (fixe) -->
+  <div class="topbar-spacer"></div>
+  {category && <SubNav category={category} active={sub} />}
+
+  <article class="post">
+    <nav class="breadcrumb" aria-label="Fil d'Ariane">
+      <ol>
+        <li><a href="/"><T t={UI.home} /></a></li>
+        {category && <li><a href={categoryUrl(category.id)}><T fr={category.name} en={category.name_en} it={category.name_it} /></a></li>}
+        {sub && <li><a href={`${categoryUrl(d.category)}#${sub}`}><T t={subLabel(sub)} /></a></li>}
+        <li aria-current="page">{d.title}</li>
+      </ol>
+    </nav>
+
+    <!-- Photos -->
+    <div class="post__media" data-gallery>
+      {photos.length === 0 && (
+        <div class="kraft post__kraft" role="img" aria-label={`${d.title} — ${UI.noPhoto.fr}`}>
+          <span class="kraft__label"><T t={UI.noPhoto} /></span>
+        </div>
+      )}
+      {photos.length > 0 && (
+        <a class="post__main" href={photos[0].full} data-lightbox-item>
+          <Image src={photos[0].image} alt={photos[0].alt || d.title} widths={[600, 1000, 1600]} sizes="(min-width: 1000px) 60vw, 100vw" loading="eager" />
+        </a>
+      )}
+      {photos.length > 1 && (
+        <ul class="post__thumbs">
+          {photos.slice(1).map((p) => (
+            <li>
+              <a href={p.full} data-lightbox-item>
+                <Image src={p.image} alt={p.alt || d.title} widths={[300, 500]} sizes="(min-width: 1000px) 15vw, 33vw" loading="lazy" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+
+    <!-- Texte et informations -->
+    <div class="post__info">
+      <h1 class="post__title"><T fr={d.title} en={d.title_en} it={d.title_it} /></h1>
+      <dl class="post__facts">
+        <div><dt class="visually-hidden">Année</dt><dd>{d.date.getFullYear()}</dd></div>
+        {d.materials && <div><dt><T t={UI.materials} /></dt><dd>{d.materials}</dd></div>}
+        {d.dimensions && <div><dt><T t={UI.dimensions} /></dt><dd>{d.dimensions}</dd></div>}
+      </dl>
+
+      <div class="prose">
+        {d.text_en || d.text_it ? (
+          <Fragment>
+            <div class="i18n" lang="fr"><Content /></div>
+            {d.text_en ? <div class="i18n" lang="en" set:html={md(d.text_en)} /> : <div class="i18n" lang="en"><Content /></div>}
+            {d.text_it ? <div class="i18n" lang="it" set:html={md(d.text_it)} /> : <div class="i18n" lang="it"><Content /></div>}
+          </Fragment>
+        ) : (
+          <Content />
+        )}
+      </div>
+
+      {d.credit && <p class="post__credit"><T t={UI.credit} /> : {d.credit}</p>}
+
+      {d.video && (embed ? (
+        <div class="post__video">
+          <iframe src={embed} title={`Vidéo : ${d.title}`} loading="lazy" allow="fullscreen; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      ) : (
+        <p><a href={d.video} target="_blank" rel="noopener"><T t={UI.video} /> ↗</a></p>
+      ))}
+    </div>
+  </article>
+
+  <hr class="band" />
+
+  <nav class="prevnext" aria-label="Travaux voisins">
+    {prev ? (
+      <a class="prevnext__prev" href={postUrl(prev)}><span class="prevnext__label">← <T t={UI.previous} /></span><em>{prev.data.title}</em></a>
+    ) : <span></span>}
+    {next ? (
+      <a class="prevnext__next" href={postUrl(next)}><span class="prevnext__label"><T t={UI.next} /> →</span><em>{next.data.title}</em></a>
+    ) : <span></span>}
+  </nav>
+
+  <!-- Visionneuse plein écran -->
+  {photos.length > 0 && (
+    <dialog class="lightbox" data-lightbox aria-label="Visionneuse">
+      <img data-lightbox-img alt="" />
+      <p class="lightbox__count" data-lightbox-count></p>
+      <button class="lightbox__btn lightbox__close" type="button" data-lightbox-close><span aria-hidden="true">×</span><span class="visually-hidden"><T t={UI.close} /></span></button>
+      {photos.length > 1 && (
+        <Fragment>
+          <button class="lightbox__btn lightbox__prev" type="button" data-lightbox-prev><span aria-hidden="true">←</span><span class="visually-hidden"><T t={UI.previous} /></span></button>
+          <button class="lightbox__btn lightbox__next" type="button" data-lightbox-next><span aria-hidden="true">→</span><span class="visually-hidden"><T t={UI.next} /></span></button>
+        </Fragment>
+      )}
+    </dialog>
+  )}
+</Base>
+
+<script>
+  import '../../scripts/lightbox.js';
+</script>

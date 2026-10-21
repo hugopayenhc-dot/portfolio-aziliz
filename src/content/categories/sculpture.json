@@ -1,0 +1,14 @@
+{
+  "name": "Sculpture",
+  "name_en": "Sculpture",
+  "name_it": "Scultura",
+  "subtitle": "De la terre au papier, au carton.",
+  "subtitle_en": "From clay to paper, to cardboard.",
+  "subtitle_it": "Dalla terra alla carta, al cartone.",
+  "intro": "Mes premières recherches exploraient l'hybridation et la métamorphose : cet espace instable où le monde humain et le monde animal se frôlent et commencent à se confondre. Un territoire où les frontières **deviennent incertaines**.\n\nJ'ai d'abord travaillé le volume avec la terre, puis le plâtre, et enfin le papier, en mêlant formes humaines et animales, à la recherche de corps en transformation. Ces matériaux accompagnent les étapes de mon évolution pendant mes études.\n\nDans mon travail de sculpture, j'utilise des matériaux accessibles, comme le carton, pour construire mes formes. Souple mais résistant, il me permet de développer des sculptures massives, marquées par la texture et le grain de la matière. Léger et modulable, il rend aussi ces formes faciles à déplacer, voire **portables**.",
+  "intro_en": "My first inquiries explored hybridization and metamorphosis: that unstable space where the human world and the animal world brush against one another and begin to merge. A territory where boundaries **become uncertain**.\n\nI first worked with volume using clay, then plaster, and lastly paper, combining human and animal forms, searching for bodies in transformation. These materials accompany the steps of evolution in my studies.\n\nIn my sculptural work, I use accessible materials, such as cardboard, to construct my forms. Flexible yet resistant, it allows me to develop massive sculptures marked by texture and the grain of the material. Light and modular, it also makes these forms easily movable, even **portable**.",
+  "intro_it": "Le mie prime ricerche esploravano l'ibridazione e la metamorfosi: quello spazio instabile in cui il mondo umano e il mondo animale si sfiorano e cominciano a fondersi. Un territorio in cui i confini **diventano incerti**.\n\nHo lavorato il volume prima con la terra, poi con il gesso e infine con la carta, unendo forme umane e animali, alla ricerca di corpi in trasformazione. Questi materiali accompagnano le tappe della mia evoluzione durante gli studi.\n\nNel mio lavoro scultoreo uso materiali accessibili, come il cartone, per costruire le mie forme. Flessibile ma resistente, mi permette di sviluppare sculture massicce, segnate dalla texture e dalla grana del materiale. Leggero e modulare, rende anche queste forme facili da spostare, persino **portatili**.",
+  "cover": "../../assets/uploads/stagatus-1.jpg",
+  "cover_alt": "Stagatus : créature hybride en grès rouge sur fond noir",
+  "order": 2
+}

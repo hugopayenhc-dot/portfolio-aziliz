@@ -1,0 +1,14 @@
+{
+  "name": "Marionnette",
+  "name_en": "Puppetry",
+  "name_it": "Marionetta",
+  "subtitle": "La mécanique reste visible.",
+  "subtitle_en": "The mechanism remains visible.",
+  "subtitle_it": "Il meccanismo resta visibile.",
+  "intro": "Cette recherche m'a peu à peu menée vers le monde des **marionnettes**.\n\nLa mécanique reste visible, mais le public, lui, perçoit un corps **vivant**.",
+  "intro_en": "This research gradually led me towards the world of **puppets**.\n\nThe mechanism remains visible, but the audience perceives a **living** body.",
+  "intro_it": "Questa ricerca mi ha portata a poco a poco verso il mondo delle **marionette**.\n\nIl meccanismo resta visibile, ma il pubblico percepisce un corpo **vivo**.",
+  "cover": "../../assets/uploads/chavalier-blanc-1.jpg",
+  "cover_alt": "Chavalier Blanc : tête de cheval en carton portée et manipulée dans l'atelier",
+  "order": 4
+}

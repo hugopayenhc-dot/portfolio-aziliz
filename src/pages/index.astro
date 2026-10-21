@@ -1,0 +1,49 @@
+---
+// Page d'accueil : grand titre « Portfolio », puis les 6 rubriques.
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import T from '../components/T.astro';
+import { getCategories, getSettings } from '../lib/content.js';
+import { categoryUrl } from '../data/structure.js';
+
+const settings = await getSettings();
+const categories = await getCategories();
+---
+<Base hero={true} image={settings.hero_image}>
+  <section class="hero">
+    {settings.hero_image && (
+      <Image class="hero__bg" src={settings.hero_image} alt="" widths={[800, 1400, 2200]} sizes="100vw" loading="eager" />
+    )}
+    <div class="hero__content">
+      <h1 class="hero__title">Portfolio</h1>
+      <p class="hero__name"><span>Aziliz Dupont Huin</span></p>
+      <p class="hero__school">EESAB</p>
+    </div>
+  </section>
+
+  <hr class="band" />
+
+  <section class="blocks" aria-label="Rubriques">
+    {categories.map((cat, i) => (
+      <a class="block" href={categoryUrl(cat.id)}>
+        {cat.cover ? (
+          <Image
+            class="block__img"
+            src={cat.cover}
+            alt={cat.cover_alt || cat.name}
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 800px) 50vw, 100vw"
+            loading={i < 2 ? 'eager' : 'lazy'}
+          />
+        ) : (
+          <div class="kraft block__img" aria-hidden="true"></div>
+        )}
+        <span class="block__text">
+          <span class="block__num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="block__title"><T fr={cat.name} en={cat.name_en} it={cat.name_it} /></span>
+          {cat.subtitle && <span class="block__sub"><T fr={cat.subtitle} en={cat.subtitle_en} it={cat.subtitle_it} /></span>}
+        </span>
+      </a>
+    ))}
+  </section>
+</Base>

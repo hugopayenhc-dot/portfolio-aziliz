@@ -1,0 +1,28 @@
+---
+// Barre du haut (motif de ginkgo dorés) : logo (nom dans un rectangle fin), bouton Menu, loupe.
+// Le motif est calé comme celui du haut de l'accueil : les deux se raccordent.
+import T from './T.astro';
+import { UI } from '../data/structure.js';
+---
+<header class="topbar" data-topbar>
+  <a class="logo" href="/" aria-label="Aziliz Dupont Huin — accueil">
+    <span>Aziliz Dupont Huin</span>
+  </a>
+
+  <div class="topbar__actions">
+    <button class="icon-btn" type="button" data-search-open>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true">
+        <circle cx="10.5" cy="10.5" r="6.5" />
+        <line x1="15.5" y1="15.5" x2="21" y2="21" />
+      </svg>
+      <span class="visually-hidden"><T t={UI.search} /></span>
+    </button>
+
+    <!-- Le bouton Menu : deux lignes fines qui se transforment en croix -->
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-toggle>
+      <span class="menu-btn__lines" aria-hidden="true"><i></i><i></i></span>
+      <span class="visually-hidden" data-menu-label><T t={UI.menu} /></span>
+    </button>
+  </div>
+</header>
+

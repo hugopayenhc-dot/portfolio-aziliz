@@ -1,0 +1,46 @@
+---
+// Barre secondaire fine : les sous-rubriques de la rubrique en cours.
+// « active » = sous-rubrique soulignée en or.
+// Sur la page d'une rubrique, le soulignement suit le défilement.
+import T from './T.astro';
+import { categoryUrl } from '../data/structure.js';
+import { subLabel } from '../lib/content.js';
+const { category, active = null, spy = false } = Astro.props;
+---
+{category.subs.length > 0 && (
+  <nav class="subnav" aria-label="Sous-rubriques" data-subnav={spy ? 'spy' : ''}>
+    <a class="subnav__home" href={categoryUrl(category.id)}><T fr={category.name} en={category.name_en} it={category.name_it} /></a>
+    <ul>
+      {category.subs.map((s) => (
+        <li>
+          <a href={`${categoryUrl(category.id)}#${s}`} data-sub={s} aria-current={s === active ? 'true' : undefined}>
+            <T t={subLabel(s)} />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+)}
+
+<script>
+  // Souligne la sous-rubrique visible à l'écran (page de rubrique seulement).
+  const nav = document.querySelector('[data-subnav="spy"]');
+  if (nav) {
+    const links = [...nav.querySelectorAll('[data-sub]')];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          links.forEach((l) =>
+            l.dataset.sub === entry.target.id ? l.setAttribute('aria-current', 'true') : l.removeAttribute('aria-current')
+          );
+        });
+      },
+      { rootMargin: '-30% 0px -60% 0px' }
+    );
+    links.forEach((l) => {
+      const section = document.getElementById(l.dataset.sub);
+      if (section) observer.observe(section);
+    });
+  }
+</script>
