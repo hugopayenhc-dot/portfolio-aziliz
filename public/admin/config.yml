@@ -222,7 +222,7 @@ collections:
           - { label: Titre du site, name: title, widget: string, hint: "Affiché dans l'onglet du navigateur et sur Google." }
           - { label: Description du site, name: description, widget: text, hint: "Une ou deux phrases pour Google et les réseaux sociaux." }
           - { label: E-mail de contact, name: email, widget: string, required: false }
-          - { label: Lien Instagram, name: instagram, widget: string, required: false, hint: "L'adresse complète, ex. : https://www.instagram.com/votre_compte/" }
+          - { label: Instagram, name: instagram, widget: string, required: false, hint: "Votre nom de compte (ex. : aziliz.dh) ou le lien complet. Le site fait le lien tout seul." }
           - { label: Image d'accueil, name: hero_image, widget: image, required: false, hint: "Facultatif. Une grande photo, assombrie, derrière « Portfolio »." }
           - { label: Portrait, name: portrait, widget: image, required: false }
           - { label: Description du portrait, name: portrait_alt, widget: string, required: false, hint: "Ex. : « Aziliz dans son atelier »" }

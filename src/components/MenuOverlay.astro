@@ -6,7 +6,7 @@ import { Image } from 'astro:assets';
 import T from './T.astro';
 import LangSwitch from './LangSwitch.astro';
 import { UI, categoryUrl } from '../data/structure.js';
-import { subLabel } from '../lib/content.js';
+import { subLabel, instagramUrl } from '../lib/content.js';
 const { categories, settings } = Astro.props;
 ---
 <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu>
@@ -67,7 +67,7 @@ const { categories, settings } = Astro.props;
   </div>
 
   <div class="menu__foot">
-    {settings.instagram && <a href={settings.instagram} rel="me noopener" target="_blank">Instagram</a>}
+    {settings.instagram && <a href={instagramUrl(settings.instagram)} rel="me noopener" target="_blank">Instagram</a>}
     {settings.email && <a href={`mailto:${settings.email}`}>{settings.email}</a>}
     <LangSwitch />
   </div>

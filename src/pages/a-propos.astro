@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import T from '../components/T.astro';
-import { getSettings, getCategories, md, plainText } from '../lib/content.js';
+import { getSettings, getCategories, md, plainText, instagramUrl } from '../lib/content.js';
 import { UI } from '../data/structure.js';
 
 const settings = await getSettings();
@@ -64,7 +64,7 @@ const cvGroups = [
         <h2 class="about__h2" id="h-contact"><T t={UI.contact} /></h2>
         <ul class="about__contact">
           {settings.email && <li><a href={`mailto:${settings.email}`}>{settings.email}</a></li>}
-          {settings.instagram && <li><a href={settings.instagram} rel="me noopener" target="_blank">Instagram ↗</a></li>}
+          {settings.instagram && <li><a href={instagramUrl(settings.instagram)} rel="me noopener" target="_blank">Instagram ↗</a></li>}
         </ul>
       </section>
     </div>

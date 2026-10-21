@@ -48,6 +48,16 @@ export async function getPublishedPosts() {
   });
 }
 
+// Lien Instagram complet, même si on a juste écrit le nom du compte
+// (« aziliz.dh », « @aziliz.dh » ou le lien entier fonctionnent tous).
+export function instagramUrl(value) {
+  if (!value) return '';
+  const v = value.trim();
+  if (/^https?:\/\//i.test(v)) return v;
+  if (/instagram\.com\//i.test(v)) return 'https://' + v.replace(/^\/+/, '');
+  return 'https://www.instagram.com/' + v.replace(/^@/, '').replace(/\/+$/, '') + '/';
+}
+
 // Adresse (URL) d'un travail.
 export function postUrl(post) {
   return `/${post.data.category}/${post.id}/`;
