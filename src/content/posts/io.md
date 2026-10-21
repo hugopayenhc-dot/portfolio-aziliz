@@ -2,7 +2,7 @@
 title: IO
 date: 2023-09-21
 category: dessin
-subcategory: projet-fini
+subcategory: oeuvres
 photos:
   - image: ../../assets/uploads/taureau-rose-3.jpg
     alt: Œuvres en bois peinte
