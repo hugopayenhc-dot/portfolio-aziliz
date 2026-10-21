@@ -1,14 +1,14 @@
 {
+  "cover_alt": "",
   "name": "Autres projets",
-  "name_en": "Other projects",
-  "name_it": "Altri progetti",
-  "subtitle": "Expériences, collaborations, essais",
+  "intro": "",
+  "order": 5,
   "subtitle_en": "Experiments, collaborations, trials",
   "subtitle_it": "Esperimenti, collaborazioni, prove",
-  "intro": "",
+  "cover": "../../assets/uploads/pot-ceramique-2.jpg",
+  "subtitle": "Expériences, collaborations, essais",
   "intro_en": "",
+  "name_en": "Other projects",
   "intro_it": "",
-  "cover": "",
-  "cover_alt": "",
-  "order": 5
+  "name_it": "Altri progetti"
 }
