@@ -1,31 +1,50 @@
 ---
-title: "War Horse"
+title: War Horse
 date: 2007-01-01
 category: marionnette
 subcategory: inspiration
-photos: []
-materials: "Bois, rotin, canne"
-dimensions: ""
-credit: "Handspring Puppet Company (Basil Jones, Adrian Kohler) — adaptation théâtrale de Nick Stafford, 2007"
+photos:
+  - image: ../../assets/uploads/war-horse.jpg
+    alt: War Horse
+  - image: ../../assets/uploads/warhorse_web.jpg
+    alt: War Horse
+  - image: ../../assets/uploads/joey-4.jpg
+    alt: War Horse
+  - image: ../../assets/uploads/joey-2.jpg
+    alt: War Horse
 video: ""
-order: 1
-published: true
-text_en: |
-  One of my primary references comes from the Handspring Puppet Company, founded by Basil Jones and Adrian Kohler, which became widely known through the stage adaptation of the novel *War Horse*, adapted for theatre by Nick Stafford.
+materials: Bois, rotin, canne
+dimensions: ""
+credit: Handspring Puppet Company (Basil Jones, Adrian Kohler) — adaptation
+  théâtrale de Nick Stafford, 2007
+text_en: >
+  One of my primary references comes from the Handspring Puppet Company, founded
+  by Basil Jones and Adrian Kohler, which became widely known through the stage
+  adaptation of the novel *War Horse*, adapted for theatre by Nick Stafford.
+
 
   In this production, the horse Joey is a large-scale puppet manipulated by several actors. Its construction is mainly of wood, rattan, and cane, with its structure left visible.
 
+
   What the audience sees is the mechanism itself: the structure does not attempt to be realistic, yet it becomes believable through the puppeteers' movement.
 
+
   The puppets are built in three parts: the head, the heart, and the hindquarters. The heart is the central and most important part of the structure. It carries the movement of breathing and gives to the body the **illusion** of life.
-text_it: |
-  Uno dei miei riferimenti principali è la Handspring Puppet Company, fondata da Basil Jones e Adrian Kohler, diventata celebre grazie all'adattamento teatrale del romanzo *War Horse*, adattato per il teatro da Nick Stafford.
+text_it: >
+  Uno dei miei riferimenti principali è la Handspring Puppet Company, fondata da
+  Basil Jones e Adrian Kohler, diventata celebre grazie all'adattamento teatrale
+  del romanzo *War Horse*, adattato per il teatro da Nick Stafford.
+
 
   In questo spettacolo, il cavallo Joey è una grande marionetta manovrata da diversi attori. È costruito principalmente in legno, rattan e canna, con la struttura lasciata visibile.
 
+
   Ciò che il pubblico vede è il meccanismo stesso: la struttura non cerca il realismo, eppure diventa credibile grazie al movimento dei marionettisti.
 
+
   Le marionette sono costruite in tre parti: la testa, il cuore e il posteriore. Il cuore è la parte centrale e più importante della struttura. Porta il movimento del respiro e dà al corpo l'**illusione** della vita.
+order: 1
+published: true
 ---
 L'une de mes références principales vient de la Handspring Puppet Company, fondée par Basil Jones et Adrian Kohler, connue notamment grâce à l'adaptation scénique du roman *War Horse*, adapté pour le théâtre par Nick Stafford.
 
