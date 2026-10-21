@@ -1,14 +1,14 @@
 {
+  "cover_alt": "Aziliz dessinant au fusain sur une grande feuille de kraft dans l'atelier",
   "name": "À propos de moi",
-  "name_en": "About me",
-  "name_it": "Chi sono",
-  "subtitle": "Sculptrice et illustratrice — EESAB Quimper",
+  "intro": "",
+  "order": 6,
   "subtitle_en": "Sculptor and illustrator — EESAB Quimper",
   "subtitle_it": "Scultrice e illustratrice — EESAB Quimper",
-  "intro": "",
+  "cover": "../../assets/uploads/capture-d-écran-2026-10-21-193700.png",
+  "subtitle": "Sculptrice et illustratrice — EESAB Quimper",
   "intro_en": "",
+  "name_en": "About me",
   "intro_it": "",
-  "cover": "../../assets/uploads/aziliz-atelier-dessin.jpg",
-  "cover_alt": "Aziliz dessinant au fusain sur une grande feuille de kraft dans l'atelier",
-  "order": 6
+  "name_it": "Chi sono"
 }
