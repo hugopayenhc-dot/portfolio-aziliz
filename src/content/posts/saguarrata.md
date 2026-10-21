@@ -2,7 +2,7 @@
 title: Saguarrata
 date: 2025-01-01
 category: sculpture
-subcategory: projet-fini
+subcategory: oeuvres
 photos:
   - image: ../../assets/uploads/saguarrata-profil.jpg
     alt: Félin tendu en papier mâché ocre sur son socle, de profil
