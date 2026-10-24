@@ -1,5 +1,5 @@
 ---
-title: Gorgoni
+title: Gorgon
 date: 2025-09-21
 category: sculpture
 subcategory: oeuvres
